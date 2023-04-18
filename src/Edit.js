@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, Router, useParams } from "react-router-dom";
+import { NavLink, Navigate, Router, useNavigate, useParams } from "react-router-dom";
 
 export default function Edit(props) {
-  const [employ_data, setData] = useState(["no data"]);
-  const [age, setAge] = useState();
-  const [email, setEmail] = useState();
-  const [name, setName] = useState();
-  const [city, setCity] = useState();
-
+    const [employ_data, setData] = useState(["no data"]);
+    const [age, setAge] = useState();
+    const [email, setEmail] = useState();
+    const [name, setName] = useState();
+    const [city, setCity] = useState();
+    const { id } = useParams();
+    const history = useNavigate();
+  
   const changeEvent = (e) => {
     setName(e.target.my_name);
     setAge(e.target.age);
@@ -22,7 +24,6 @@ export default function Edit(props) {
         e.target.style.border = "2px solid #22c55e"
     }
   };
-  const { id } = useParams();
   const get_data_by_id = () => {
     const fet_employee1 = fetch(`http://127.0.0.1:8000/myapi/${id}`)
       .then((value) => {
@@ -61,7 +62,7 @@ export default function Edit(props) {
       body: my_body,
     })
     if (update_data.ok == true){
-        alert("your Data updated Successfully")
+        Navigate("/")
     }
     else{
         alert("Something went wrong")
